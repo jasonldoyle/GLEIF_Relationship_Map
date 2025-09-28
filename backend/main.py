@@ -20,6 +20,7 @@ HEADERS = {"Accept": "application/vnd.api+json"}
 
 visited = set()  # Track visited nodes to avoid cycles
 
+
 # Routes
 @app.get("/full-graph/{lei}")
 def full_graph(lei: str):
@@ -70,9 +71,29 @@ def fetch_entity_info(lei: str):
     data = resp.json().get("data", {})
     attributes = data.get("attributes", {})
     entity = attributes.get("entity", {})
+
     legal_name = entity.get("legalName", {}).get("name", "Unknown")
     country = entity.get("legalAddress", {}).get("country", "Unknown")
-    return {"id": lei, "name": legal_name, "country": country}
+    jurisdiction = attributes.get("jurisdiction", "Unknown")
+    status = entity.get("status", "Unknown")
+    legal_form = entity.get("legalForm", {}).get("id", "Unknown")
+
+    registration = attributes.get("registration", {})
+    registration_date = registration.get("initialRegistrationDate", None)
+    last_update = registration.get("lastUpdateDate", None)
+    next_renewal = registration.get("nextRenewalDate", None)
+
+    return {
+        "id": lei,
+        "name": legal_name,
+        "country": country,
+        "jurisdiction": jurisdiction,
+        "status": status,
+        "legal_form": legal_form,
+        "registration_date": registration_date,
+        "last_update": last_update,
+        "next_renewal": next_renewal,
+    }
 
 
 def fetch_children(lei: str):
@@ -86,12 +107,16 @@ def fetch_children(lei: str):
     for child in children_data:
         attrs = child.get("attributes", {})
         entity = attrs.get("entity", {})
-        legal_name = entity.get("legalName", {}).get("name", "Unknown")
-        country = entity.get("legalAddress", {}).get("country", "Unknown")
         normalized.append({
             "id": attrs.get("lei", "Unknown"),
-            "name": legal_name,
-            "country": country
+            "name": entity.get("legalName", {}).get("name", "Unknown"),
+            "country": entity.get("legalAddress", {}).get("country", "Unknown"),
+            "jurisdiction": attrs.get("jurisdiction", "Unknown"),
+            "status": entity.get("status", "Unknown"),
+            "legal_form": entity.get("legalForm", {}).get("id", "Unknown"),
+            "registration_date": attrs.get("registration", {}).get("initialRegistrationDate"),
+            "last_update": attrs.get("registration", {}).get("lastUpdateDate"),
+            "next_renewal": attrs.get("registration", {}).get("nextRenewalDate"),
         })
     return normalized
 
@@ -107,11 +132,15 @@ def fetch_parents(lei: str):
     for parent in parents_data:
         attrs = parent.get("attributes", {})
         entity = attrs.get("entity", {})
-        legal_name = entity.get("legalName", {}).get("name", "Unknown")
-        country = entity.get("legalAddress", {}).get("country", "Unknown")
         normalized.append({
             "id": attrs.get("lei", "Unknown"),
-            "name": legal_name,
-            "country": country
+            "name": entity.get("legalName", {}).get("name", "Unknown"),
+            "country": entity.get("legalAddress", {}).get("country", "Unknown"),
+            "jurisdiction": attrs.get("jurisdiction", "Unknown"),
+            "status": entity.get("status", "Unknown"),
+            "legal_form": entity.get("legalForm", {}).get("id", "Unknown"),
+            "registration_date": attrs.get("registration", {}).get("initialRegistrationDate"),
+            "last_update": attrs.get("registration", {}).get("lastUpdateDate"),
+            "next_renewal": attrs.get("registration", {}).get("nextRenewalDate"),
         })
     return normalized
