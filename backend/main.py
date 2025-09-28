@@ -18,7 +18,7 @@ app.add_middleware(
 BASE_URL = "https://api.gleif.org/api/v1/lei-records"
 HEADERS = {"Accept": "application/vnd.api+json"}
 
-visited = set()
+visited = set()  # Track visited nodes to avoid cycles
 
 # Routes
 @app.get("/full-graph/{lei}")
@@ -29,8 +29,8 @@ def full_graph(lei: str):
     return {"nodes": nodes, "links": links}
 
 
-# Graph building logic
-def build_graph(parent_lei: str):
+# Graph building logic (parents + children)
+def build_graph(start_lei: str):
     nodes = []
     links = []
 
@@ -40,16 +40,20 @@ def build_graph(parent_lei: str):
         visited.add(current_lei)
 
         # Add current node
-        parent_info = fetch_entity_info(current_lei)
-        nodes.append(parent_info)
+        node_info = fetch_entity_info(current_lei)
+        nodes.append(node_info)
 
-        # Fetch direct children
-        children = fetch_children(current_lei)
-        for child in children:
+        # Fetch and recurse children
+        for child in fetch_children(current_lei):
             links.append({"source": current_lei, "target": child["id"]})
             recurse(child["id"])
 
-    recurse(parent_lei)
+        # Fetch and recurse parents
+        for parent in fetch_parents(current_lei):
+            links.append({"source": parent["id"], "target": current_lei})
+            recurse(parent["id"])
+
+    recurse(start_lei)
 
     # Deduplicate nodes
     unique_nodes = {node["id"]: node for node in nodes}.values()
@@ -77,11 +81,31 @@ def fetch_children(lei: str):
     if resp.status_code != 200:
         return []
 
-    # Normalize children data
     children_data = resp.json().get("data", [])
     normalized = []
     for child in children_data:
         attrs = child.get("attributes", {})
+        entity = attrs.get("entity", {})
+        legal_name = entity.get("legalName", {}).get("name", "Unknown")
+        country = entity.get("legalAddress", {}).get("country", "Unknown")
+        normalized.append({
+            "id": attrs.get("lei", "Unknown"),
+            "name": legal_name,
+            "country": country
+        })
+    return normalized
+
+
+def fetch_parents(lei: str):
+    url = f"{BASE_URL}/{lei}/ultimate-parents"
+    resp = requests.get(url, headers=HEADERS)
+    if resp.status_code != 200:
+        return []
+
+    parents_data = resp.json().get("data", [])
+    normalized = []
+    for parent in parents_data:
+        attrs = parent.get("attributes", {})
         entity = attrs.get("entity", {})
         legal_name = entity.get("legalName", {}).get("name", "Unknown")
         country = entity.get("legalAddress", {}).get("country", "Unknown")
