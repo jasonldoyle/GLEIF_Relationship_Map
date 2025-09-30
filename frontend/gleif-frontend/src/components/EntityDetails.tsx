@@ -6,20 +6,12 @@ type Props = {
 
 export default function EntityDetails({ selectedNode }: Props) {
   return (
-    <div
-      style={{
-        flex: 1,
-        background: "#222",
-        color: "white",
-        padding: "1rem",
-        overflowY: "auto",
-      }}
-    >
-      <h2 style={{ borderBottom: "1px solid #444", paddingBottom: "0.5rem" }}>
+    <div>
+      <h2 className="text-xl font-semibold border-b border-gray-700 pb-2 mb-4">
         Entity Details
       </h2>
       {selectedNode ? (
-        <div>
+        <div className="space-y-2 text-sm">
           <p><strong>Name:</strong> {selectedNode.name}</p>
           <p><strong>LEI:</strong> {selectedNode.id}</p>
           <p><strong>Country:</strong> {selectedNode.country}</p>
@@ -31,7 +23,7 @@ export default function EntityDetails({ selectedNode }: Props) {
           <p><strong>Next Renewal:</strong> {selectedNode.next_renewal || "N/A"}</p>
         </div>
       ) : (
-        <p style={{ color: "#aaa" }}>Click a node to see details here.</p>
+        <p className="text-gray-400">Click a node to see details here.</p>
       )}
     </div>
   );

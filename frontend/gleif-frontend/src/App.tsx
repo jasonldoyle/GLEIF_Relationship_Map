@@ -1,34 +1,53 @@
 import { useState } from "react";
-import { Graph, Node } from "./types/graph";
+import GraphView from "./components/GraphView";
 import EntityDetails from "./components/EntityDetails";
-import Controls from "./components/Controls";
-import GraphViewer from "./components/GraphViewer";
+import { Node } from "./types/graph";
 
 function App() {
-  const [lei, setLei] = useState("");
-  const [graph, setGraph] = useState<Graph | null>(null);
-  const [loading, setLoading] = useState(false);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
-
-  const fetchGraph = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch(`http://localhost:8000/full-graph/${lei}`);
-      const data: Graph = await res.json();
-      setGraph(data);
-    } catch (err) {
-      console.error("Error fetching graph:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div style={{ display: "flex", height: "100vh", width: "100vw" }}>
-      <EntityDetails selectedNode={selectedNode} />
-      <div style={{ flex: 3, display: "flex", flexDirection: "column" }}>
-        <Controls lei={lei} setLei={setLei} fetchGraph={fetchGraph} loading={loading} />
-        <GraphViewer graph={graph} setSelectedNode={setSelectedNode} />
+    <div className="flex h-screen w-screen bg-gray-900 relative">
+      {/* Left side: Entity Details */}
+      <div
+        className={`transition-all duration-300 ${
+          collapsed ? "w-0" : "w-1/4"
+        } bg-gray-800 text-white overflow-hidden`}
+      >
+        {!collapsed && (
+          <div className="p-6 h-full overflow-y-auto">
+            <EntityDetails selectedNode={selectedNode} />
+          </div>
+        )}
+      </div>
+
+      {/* Toggle button (floats on border) */}
+      <button
+        onClick={() => setCollapsed(!collapsed)}
+        className="absolute top-1/2 left-[calc(25%-0.75rem)] transform -translate-y-1/2 bg-gray-700 hover:bg-gray-600 text-white p-2 rounded-full shadow-md z-10 transition-all"
+        style={{ left: collapsed ? "0.5rem" : "calc(25% - 0.75rem)" }}
+      >
+        {collapsed ? "▶" : "◀"}
+      </button>
+
+      {/* Right side: Graph Viewer */}
+      <div
+        className={`flex-1 flex flex-col bg-gray-50 transition-all duration-300 ${
+          collapsed ? "w-full" : "w-3/4"
+        } h-screen`}   // enforce equal height
+      >
+        {/* Header stays fixed height */}
+        <header className="p-4 border-b">
+          <h1 className="text-2xl font-bold text-gray-900">
+            LEI Graph Viewer
+          </h1>
+        </header>
+
+        {/* Graph fills remaining height */}
+        <main className="flex-1 overflow-hidden">
+          <GraphView onSelectNode={setSelectedNode} />
+        </main>
       </div>
     </div>
   );
