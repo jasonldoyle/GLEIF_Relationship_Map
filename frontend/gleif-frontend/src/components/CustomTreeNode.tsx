@@ -70,10 +70,9 @@ const CustomTreeNode = ({ nodeDatum, onSelectNode }: CustomTreeNodeProps) => {
         x={0}
         y={line2 ? -14 : -8}
         textAnchor="middle"
-        fontSize={14}
-        fontWeight={600}
+        fontWeight="100"
         fill={palette.name}
-      >
+              >
         {line1}
       </text>
       {line2 && (
@@ -81,8 +80,7 @@ const CustomTreeNode = ({ nodeDatum, onSelectNode }: CustomTreeNodeProps) => {
           x={0}
           y={2}
           textAnchor="middle"
-          fontSize={14}
-          fontWeight={600}
+            fontWeight="200"
           fill={palette.name}
         >
           {line2}
@@ -95,8 +93,7 @@ const CustomTreeNode = ({ nodeDatum, onSelectNode }: CustomTreeNodeProps) => {
           x={0}
           y={line2 ? 20 : 12}
           textAnchor="middle"
-          fontSize={11}
-          fontWeight={500}
+            fontWeight="200"
           fill={palette.meta1}
         >
           LEI: {lei}
@@ -109,7 +106,6 @@ const CustomTreeNode = ({ nodeDatum, onSelectNode }: CustomTreeNodeProps) => {
           x={0}
           y={line2 ? 36 : 28}
           textAnchor="middle"
-          fontSize={11}
           fill={palette.meta2}
         >
           {country}

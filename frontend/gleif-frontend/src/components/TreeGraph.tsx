@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import Tree from "react-d3-tree";
 import CustomTreeNode from "./CustomTreeNode";
 
@@ -20,6 +21,26 @@ function TreeGraph({
   setTreeZoom,
   setTreeData,
 }: TreeGraphProps) {
+  const treeRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (treeData.length > 0) {
+      // Center root and zoom out a bit after render
+      setTimeout(() => {
+        const container = document.querySelector("div[style*='height: 100%']");
+        if (!container) return;
+
+        const { width, height } = container.getBoundingClientRect();
+
+        // Position roughly center
+        setTreeTranslate({ x: width / 2, y: height / 6 });
+
+        // Set a good default zoom (0.7 = zoomed out)
+        setTreeZoom(0.7);
+      }, 200);
+    }
+  }, [treeData]);
+
   if (!Array.isArray(treeData) || treeData.length === 0) {
     return (
       <div className="flex items-center justify-center h-full text-gray-500">
@@ -31,18 +52,19 @@ function TreeGraph({
   return (
     <div style={{ width: "100%", height: "100%" }}>
       <Tree
+        ref={treeRef}
         data={treeData}
         orientation="vertical"
         translate={treeTranslate}
         zoom={treeZoom}
         zoomable
         collapsible
-        nodeSize={{ x: 200, y: 140 }}              // more breathing room
+        nodeSize={{ x: 200, y: 140 }}
         separation={{ siblings: 2.2, nonSiblings: 2.8 }}
         pathFunc="elbow"
         styles={{
           links: {
-            stroke: "#cbd5e1", // slate-300
+            stroke: "#cbd5e1",
             strokeWidth: 1.25,
           },
         }}
