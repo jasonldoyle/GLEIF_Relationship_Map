@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Graph, Node } from "../types/graph";
+import { Graph, Node, TreeNode } from "../types/graph";
 import TreeGraph from "./TreeGraph";
 import NetworkGraph from "./NetworkGraph";
 import { buildTree } from "../utils/buildTree";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 type GraphViewProps = {
   onSelectNode: (node: Node | null) => void;
@@ -17,29 +19,27 @@ function GraphView({ onSelectNode }: GraphViewProps) {
   // Tree state
   const [treeTranslate, setTreeTranslate] = useState({ x: 0, y: 0 });
   const [treeZoom, setTreeZoom] = useState(1);
-  const [treeData, setTreeData] = useState<any[]>([]);
-
-  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+  const [treeData, setTreeData] = useState<TreeNode[]>([]); // ✅ fixed type
 
   const fetchGraph = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${API_BASE_URL}/full-graph/${lei}`);
-      const data: Graph = await res.json();
-      setGraph(data);
+  if (!lei) return;
+  setLoading(true);
+  try {
+    const res = await fetch(`${API_URL}/full-graph/${lei}`);
+    const data: Graph = await res.json();
+    setGraph(data);
 
-      const root = buildTree(data, lei);
-      setTreeData(root ? [root] : []);
+    const root = buildTree(data, lei);
+    setTreeData(root ? [root] : []);
 
-      // Reset zoom; translate will be auto-centered in TreeGraph on first render
-      setTreeZoom(1);
-      setTreeTranslate({ x: 0, y: 0 });
-    } catch (err) {
-      console.error("Error fetching graph:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    setTreeZoom(1);
+    setTreeTranslate({ x: 0, y: 0 });
+  } catch (err) {
+    console.error("Error fetching graph:", err);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="flex flex-col w-full h-full">

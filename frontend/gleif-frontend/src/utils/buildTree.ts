@@ -21,23 +21,23 @@ export function buildTree(graph: Graph, startLei: string): TreeNode | null {
   }
 
   // ---- Build node map (keeps original node for details) ----
-  const nodeMap: Record<string, TreeNode> = {};
-  for (const n of graph.nodes) {
-    nodeMap[n.id] = {
-      name: n.name,
-      attributes: {
-        lei: n.id,
-        country: n.country ?? "Unknown",
-        status: n.status ?? "Unknown",
-        legalForm: n.legalForm ?? "Unknown",
-        registrationDate: n.registrationDate ?? "N/A",
-        lastUpdate: n.lastUpdate ?? "N/A",
-        nextRenewal: n.nextRenewal ?? "N/A",
-      },
-      children: [],
-      nodeData: n,
-    };
-  }
+const nodeMap: Record<string, TreeNode> = {};
+for (const n of graph.nodes) {
+  nodeMap[n.id] = {
+    name: n.name,
+    attributes: {
+      lei: n.id,
+      country: n.country ?? "Unknown",
+      status: n.status ?? "Unknown",
+      legal_form: n.legal_form ?? "Unknown",
+      registration_date: n.registration_date ?? "N/A",
+      last_update: n.last_update ?? "N/A",
+      next_renewal: n.next_renewal ?? "N/A",
+    },
+    children: [],
+    nodeData: n,
+  };
+}
 
   // ---- Parent/child maps for fast lookups ----
   const parentsOf = new Map<string, Set<string>>();

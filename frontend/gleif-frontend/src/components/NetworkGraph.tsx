@@ -1,5 +1,9 @@
 import { useRef, useEffect } from "react";
-import ForceGraph2D from "react-force-graph-2d";
+import ForceGraph2D, {
+  ForceGraphMethods,
+  NodeObject,
+  LinkObject,
+} from "react-force-graph-2d";
 import { Graph, Node } from "../types/graph";
 
 type NetworkGraphProps = {
@@ -8,42 +12,49 @@ type NetworkGraphProps = {
 };
 
 function NetworkGraph({ graph, onSelectNode }: NetworkGraphProps) {
-  const fgRef = useRef<any>();
+  // ✅ Use correct generics for ref
+  const fgRef = useRef<
+    ForceGraphMethods<NodeObject<Node>, LinkObject<Node>>
+  >(null!);
 
-  // Center and zoom when graph data updates
   useEffect(() => {
     if (fgRef.current && graph?.nodes?.length) {
-      // Wait a tick to ensure layout positions are calculated
       setTimeout(() => {
-        fgRef.current.zoomToFit(400, 100, (node: any) => true); // duration=400ms, padding=50px
+        fgRef.current.zoomToFit(400, 100);
       }, 100);
     }
   }, [graph]);
 
   return (
-    <ForceGraph2D
+    <ForceGraph2D<NodeObject<Node>, LinkObject<Node>>
       ref={fgRef}
       graphData={graph}
       nodeId="id"
-      nodeLabel={(node: any) =>
+      nodeLabel={(node: Node) =>
         `${node.name}\nLEI: ${node.id}\nCountry: ${node.country}`
       }
       linkDirectionalArrowLength={6}
       linkDirectionalArrowRelPos={1}
-      nodeCanvasObject={(node: any, ctx, globalScale) => {
+      nodeCanvasObject={(
+        node: NodeObject<Node>,
+        ctx: CanvasRenderingContext2D,
+        globalScale: number
+      ) => {
         const label = node.name || node.id;
         const fontSize = 10 / globalScale;
         ctx.font = `${fontSize}px 'Inter', sans-serif`;
         ctx.textAlign = "center";
         ctx.fillStyle = "#111827";
-        ctx.fillText(label, node.x!, node.y! + 10);
+        ctx.fillText(label, node.x ?? 0, (node.y ?? 0) + 10);
 
         ctx.beginPath();
-        ctx.arc(node.x!, node.y!, 6, 0, 2 * Math.PI, false);
+        ctx.arc(node.x ?? 0, node.y ?? 0, 6, 0, 2 * Math.PI, false);
         ctx.fillStyle = "#4f46e5";
         ctx.fill();
       }}
-      onNodeClick={(node: any) => onSelectNode(node)}
+      onNodeClick={(node: NodeObject<Node>) =>
+        onSelectNode(node as unknown as Node)
+      }
     />
   );
 }

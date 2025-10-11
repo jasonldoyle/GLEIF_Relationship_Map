@@ -1,3 +1,6 @@
+// --------------------
+// Raw graph structures
+// --------------------
 export type Node = {
   id: string;
   name: string;
@@ -20,9 +23,22 @@ export type Graph = {
   links: Link[];
 };
 
+// --------------------
+// Tree structure
+// --------------------
+export type TreeNodeAttributes = {
+  lei: string;
+  country: string;
+  status: string;
+  legal_form: string;
+  registration_date: string;
+  last_update: string;
+  next_renewal: string;
+};
+
 export type TreeNode = {
   name: string;
-  attributes?: Record<string, string>;
-  children?: TreeNode[];
-  nodeData?: Node;
+  attributes: TreeNodeAttributes;
+  children: TreeNode[];
+  nodeData: Node;
 };

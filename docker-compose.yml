@@ -1,22 +1,23 @@
 version: "3.9"
-
 services:
   backend:
     build: ./backend
     container_name: gleif-backend
     ports:
       - "8000:8000"
-    environment:
-      - PYTHONUNBUFFERED=1
-    restart: unless-stopped
+    networks:
+      - gleif-network
 
   frontend:
     build: ./frontend/gleif-frontend
     container_name: gleif-frontend
     ports:
-      - "80:80"
+      - "5173:80"
     depends_on:
       - backend
-    environment:
-      - VITE_API_URL=http://backend:8000
-    restart: unless-stopped
+    networks:
+      - gleif-network
+
+networks:
+  gleif-network:
+    driver: bridge

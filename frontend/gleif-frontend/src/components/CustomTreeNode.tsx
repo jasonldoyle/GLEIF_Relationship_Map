@@ -1,6 +1,12 @@
+import { Node, TreeNode } from "../types/graph";
+import { TreeNodeDatum } from "./TreeGraph"; // or duplicate the type locally if circular
+
 type CustomTreeNodeProps = {
-  nodeDatum: any;
-  onSelectNode: (node: any | null) => void;
+  nodeDatum: TreeNodeDatum & {
+    data?: TreeNode;
+    nodeData?: TreeNode; // ✅ add this line
+  };
+  onSelectNode: (node: Node | null) => void;
 };
 
 // split a long name into up to two readable lines
@@ -14,8 +20,10 @@ function splitLabel(s: string, max = 26): [string, string?] {
 
 const CustomTreeNode = ({ nodeDatum, onSelectNode }: CustomTreeNodeProps) => {
   const isRoot = !nodeDatum.parent;
-  const original = nodeDatum.nodeData ?? nodeDatum.data?.nodeData ?? null;
-
+const original: Node | null =
+  ((nodeDatum.nodeData as unknown) as Node) ??
+  ((nodeDatum.data?.nodeData as unknown) as Node) ??
+  null;
   const name =
     nodeDatum.name ||
     original?.name ||
