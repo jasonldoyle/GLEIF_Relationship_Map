@@ -1,4 +1,5 @@
 version: "3.9"
+
 services:
   backend:
     build: ./backend
@@ -7,9 +8,12 @@ services:
       - "8000:8000"
     networks:
       - gleif-network
+    restart: unless-stopped
 
   frontend:
-    build: ./frontend/gleif-frontend
+    build:
+      context: ./frontend/gleif-frontend
+      dockerfile: Dockerfile
     container_name: gleif-frontend
     ports:
       - "5173:80"
@@ -17,6 +21,7 @@ services:
       - backend
     networks:
       - gleif-network
+    restart: unless-stopped
 
 networks:
   gleif-network:
