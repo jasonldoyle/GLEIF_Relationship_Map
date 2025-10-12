@@ -4,7 +4,11 @@ import TreeGraph from "./TreeGraph";
 import NetworkGraph from "./NetworkGraph";
 import { buildTree } from "../utils/buildTree";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "http://13.53.177.9:8000";
+
+console.log("🔍 Using API URL:", API_URL);
 
 type GraphViewProps = {
   onSelectNode: (node: Node | null) => void;

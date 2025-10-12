@@ -1,1 +1,7 @@
 @import "tailwindcss";
+/* Base styles for the GLEIF Relationship Map frontend */
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background-color: #f9fafb;
+}

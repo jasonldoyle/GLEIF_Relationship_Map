@@ -1,31 +1,19 @@
-import { defineConfig, loadEnv } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, '.', 'VITE_')
+// Read from process.env or fallback to a default backend URL
+const apiUrl = process.env.VITE_API_URL || "http://16.171.206.188:8000";
 
-  return {
-    plugins: [react()],
-    base: '/', // Ensures assets load correctly from root
-    define: {
-      'import.meta.env.VITE_API_URL': JSON.stringify(env.VITE_API_URL),
-    },
-    server: {
-      host: '0.0.0.0',
-      port: 5173,
-    },
-    preview: {
-      host: '0.0.0.0',
-      port: 5173,
-    },
-    build: {
-      outDir: 'dist',
-      assetsDir: 'assets',
-      rollupOptions: {
-        output: {
-          manualChunks: undefined,
-        },
-      },
-    },
-  }
-})
+export default defineConfig({
+  plugins: [react()],
+  define: {
+    "import.meta.env.VITE_API_URL": JSON.stringify(apiUrl),
+  },
+  build: {
+    outDir: "dist",
+  },
+  server: {
+    host: true,
+    port: 5173,
+  },
+});
