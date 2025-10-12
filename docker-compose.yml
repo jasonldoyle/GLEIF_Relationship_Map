@@ -14,6 +14,8 @@ services:
     build:
       context: ./frontend/gleif-frontend
       dockerfile: Dockerfile
+      args:
+        VITE_API_URL: "${VITE_API_URL:-http://localhost:8000}"  # Use env variable with fallback
     container_name: gleif-frontend
     ports:
       - "5173:80"

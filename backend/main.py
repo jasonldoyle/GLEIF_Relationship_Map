@@ -4,12 +4,17 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# CORS
+# CORS - Updated for AWS EC2 deployment
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://16.171.206.188:5173",  # Frontend on EC2
+        "http://ec2-16-171-206-188.eu-north-1.compute.amazonaws.com:5173",  # Frontend using DNS
+        "http://localhost:5173",  # Local development
+        "http://127.0.0.1:5173",  # Local development alternative
+    ],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 
