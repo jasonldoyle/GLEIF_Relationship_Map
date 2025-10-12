@@ -7,6 +7,51 @@ It provides users with a clear and interactive way to explore the real-world cor
 
 ---
 
+## Live Demo
+
+Try the live hosted app here:  
+👉 **[http://16.171.206.188:5173](http://16.171.206.188:5173)**
+
+> The backend FastAPI API is also available here:  
+> ⚙️ **[http://16.171.206.188:8000/docs](http://16.171.206.188:8000/docs)**  
+>
+> *(Note: the EC2 instance may take a few seconds to respond when first accessed.)*
+
+---
+
+### How to Use the Demo
+
+1. Open the site in your browser → [http://16.171.206.188:5173](http://16.171.206.188:5173)
+2. Enter a **Legal Entity Identifier (LEI)** in the search bar  
+   For example:
+
+   *3U8WV1YX2VMUHH7Z1Q21*
+
+   *(This corresponds to AIB Group plc — it produces a small, clean example tree.)*
+3. Click **Fetch Graph** to visualize the entity’s connections.
+4. Toggle between:
+   - **Tree View** — hierarchical ownership structure  
+   - **Network View** — force-directed graph layout  
+5. Click on any node to view its details (LEI, country, legal form, etc.)
+
+---
+
+### Sample LEIs to Try
+
+| Company | LEI |
+|----------|-----|
+| **AIB Group plc (Ireland)** | `3U8WV1YX2VMUHH7Z1Q21` |
+| **Barclays Bank PLC (UK)** | `G5GSEF7VJP5I7OUK5573` |
+| **HSBC Holdings plc (UK)** | `MP6I5ZYZBEU3UXPYFY54` |
+| **Nestlé S.A. (Switzerland)** | `254900UBKGS0000O0Y14` |
+| **Allianz SE (Germany)** | `529900W3MOO00A50CU29` |
+| **BlackRock, Inc. (USA)** | `549300RLMK6C7DJJHE28` |
+| **Apple Inc. (USA)** | `HWUPKR0MPOU8FGXBT394` |
+| **Volkswagen AG (Germany)** | `529900HWWD7VMC0OHH03` |
+| **UBS Group AG (Switzerland)** | `549300ZOF1D6WJ74JT11` |
+| **JPMorgan Chase & Co. (USA)** | `7H6GLXDRUGQFU57RNE97` |
+
+---
 ## Tech Stack
 
 | Layer | Technology | Description |
@@ -33,22 +78,10 @@ To create an **intuitive data visualization tool** that reveals how companies, f
 - 🎨 **Clean UI** – Built with TailwindCSS and modern React practices  
 - 🐳 **Dockerized Stack** – Fully reproducible and deployable via Docker Compose  
 
----
-
-## Live Demo
-
-> **Try it out directly:**  
-> 🌍 [http://16.171.206.188:5173](http://16.171.206.188:5173)  
->
-> The backend FastAPI documentation is available at:  
-> ⚙️ [http://16.171.206.188:8000/docs](http://16.171.206.188:8000/docs)
->
-> *Note: the EC2 instance may take a few seconds to respond when first accessed.*
-
----
-
 ## Screenshots
-<img width="1486" height="687" alt="Screenshot 2025-10-12 at 14 41 28" src="https://github.com/user attachments/assets/a6d289f4-8df7-4982-b158-325aad76f5f0" />
+<img width="1486" height="687" alt="Screenshot 2025-10-12 at 14 41 28" src="https://github.com/user-attachments/assets/111bd38a-345b-4a1c-b254-b1b7d25f25c6" />
+
+
 <img width="1486" height="849" alt="Screenshot 2025-10-12 at 14 41 42" src="https://github.com/user-attachments/assets/90dceb11-0955-4c77-afa4-205028d806c3" />
 
 > Once your screenshots are uploaded (e.g., `/assets/tree-view.png` and `/assets/network-view.png`), update this section to embed them like so:
