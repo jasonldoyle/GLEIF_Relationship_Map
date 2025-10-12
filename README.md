@@ -93,7 +93,17 @@ To create an **intuitive data visualization tool** that reveals how companies, f
 
 ## Local Development
 
+## License
+
+This project is licensed under a **Modified MIT License (Non-Commercial)**.  
+You are free to use, modify, and share it for personal or educational purposes,  
+but **commercial use requires prior written permission** from the author.
+
+© 2025 Jason Liu Doyle — [GitHub Profile](https://github.com/jasonldoyle)
+
 ### Clone the repository
 ```bash
 git clone https://github.com/jasonldoyle/GLEIF_Relationship_Map.git
 cd GLEIF_Relationship_Map
+
+---
