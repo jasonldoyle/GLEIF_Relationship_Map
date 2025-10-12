@@ -2,7 +2,10 @@
 
 **Interactive visualization of global corporate ownership structures using GLEIF’s Legal Entity Identifier (LEI) dataset.**
 
-Built as a full-stack web application, this project maps relationships between legal entities (e.g., parent–subsidiary or fund–manager links) using a **graph network and hierarchical tree view**.  
+Built as a full-stack web application, this project maps relationships between legal entities (e.g., parent–subsidiary or fund–manager links) using a **graph network and hierarchical tree view**.
+
+Hosted on AWS.
+
 It provides users with a clear and interactive way to explore the real-world corporate structures behind LEIs.
 
 ---
@@ -10,7 +13,7 @@ It provides users with a clear and interactive way to explore the real-world cor
 ## Live Demo
 
 Try the live hosted app here:  
-👉 **[http://16.171.206.188:5173](http://16.171.206.188:5173)**
+-> **[http://16.171.206.188:5173](http://16.171.206.188:5173)**
 
 > The backend FastAPI API is also available here:  
 > ⚙️ **[http://16.171.206.188:8000/docs](http://16.171.206.188:8000/docs)**  
@@ -41,15 +44,10 @@ Try the live hosted app here:
 | Company | LEI |
 |----------|-----|
 | **AIB Group plc (Ireland)** | `3U8WV1YX2VMUHH7Z1Q21` |
-| **Barclays Bank PLC (UK)** | `G5GSEF7VJP5I7OUK5573` |
-| **HSBC Holdings plc (UK)** | `MP6I5ZYZBEU3UXPYFY54` |
-| **Nestlé S.A. (Switzerland)** | `254900UBKGS0000O0Y14` |
-| **Allianz SE (Germany)** | `529900W3MOO00A50CU29` |
-| **BlackRock, Inc. (USA)** | `549300RLMK6C7DJJHE28` |
-| **Apple Inc. (USA)** | `HWUPKR0MPOU8FGXBT394` |
-| **Volkswagen AG (Germany)** | `529900HWWD7VMC0OHH03` |
-| **UBS Group AG (Switzerland)** | `549300ZOF1D6WJ74JT11` |
-| **JPMorgan Chase & Co. (USA)** | `7H6GLXDRUGQFU57RNE97` |
+| **Brummer & Partners** | `213800XLPZI6PECOUC58` |
+| **Bank of Ireland Group** | `635400C8EK6DRI12LJ39` |
+| **INTERNATIONAL CONSOLIDATED AIRLINES GROUP, S.A.** | `959800TZHQRUSH1ESL13` |
+
 
 ---
 ## Tech Stack
@@ -65,18 +63,18 @@ Try the live hosted app here:
 
 ---
 
-## 📊 Project Overview
+## Project Overview
 
 ### Objective
 To create an **intuitive data visualization tool** that reveals how companies, funds, and financial institutions are connected globally through GLEIF relationship data.
 
-### ✨ Features
-- 🔍 **Search by LEI** – Fetch any legal entity and its connected network  
-- 🌳 **Tree View** – Hierarchical ownership structure  
-- 🕸️ **Network View** – Force-directed graph layout  
-- ⚙️ **Interactive Controls** – Zoom, drag, and click nodes to view entity metadata  
-- 🎨 **Clean UI** – Built with TailwindCSS and modern React practices  
-- 🐳 **Dockerized Stack** – Fully reproducible and deployable via Docker Compose  
+### Features
+- **Search by LEI** – Fetch any legal entity and its connected network  
+- **Tree View** – Hierarchical ownership structure  
+- **Network View** – Force-directed graph layout  
+- **Interactive Controls** – Zoom, drag, and click nodes to view entity metadata  
+- **Clean UI** – Built with TailwindCSS and modern React practices  
+- **Dockerized Stack** – Fully reproducible and deployable via Docker Compose  
 
 ## Screenshots
 <img width="1486" height="687" alt="Screenshot 2025-10-12 at 14 41 28" src="https://github.com/user-attachments/assets/111bd38a-345b-4a1c-b254-b1b7d25f25c6" />
