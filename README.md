@@ -82,13 +82,6 @@ To create an **intuitive data visualization tool** that reveals how companies, f
 
 <img width="1486" height="849" alt="Screenshot 2025-10-12 at 14 41 42" src="https://github.com/user-attachments/assets/90dceb11-0955-4c77-afa4-205028d806c3" />
 
-> Once your screenshots are uploaded (e.g., `/assets/tree-view.png` and `/assets/network-view.png`), update this section to embed them like so:
->
-> ```markdown
-> ![Tree View](assets/tree-view.png)
-> ![Network View](assets/network-view.png)
-> ```
-
 ---
 
 ## Local Development
